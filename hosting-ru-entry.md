@@ -149,6 +149,53 @@ RUVDS уточнение (vpsindex.ru, 06.09.2026): Старт HIT 1/1/20 HDD �
 - Обновлённый вариант B: UltraVDS (2) + ISPserver (2) + Selectel (3). Два узла с низким риском и один с шансом на белый список.
 - RUVDS вычеркнуть: лимит 10 ГБ/сутки в оферте.
 
+## Выбор города (без МСК и СПб)
+
+Что даёт регион:
+- **Подсети.** IP не из подсетей больших московских и питерских облаков, которые ТСПУ фильтрует с июня 2026. Лучше всего — когда у локального ДЦ или регионального оператора своя AS, а не AS хостинга.
+- **Разнесение.** Разные города, хостеры и AS — нет общей точки отказа.
+
+Чего регион не даёт:
+- ТСПУ стоит у операторов по всей стране, город от него не прячет.
+- Трафик на зарубежный выход всё равно идёт через Москву или Петербург.
+- Региональные IP почти не бывают в мобильных белых списках.
+
+Пинг: до Москвы, оценочно, по магистралям.
+
+| Город | Пинг до МСК | Хостеры (подтверждено) | Лучший тариф | Минусы | Оценка |
+|---|---|---|---|---|---|
+| **Казань** | ~12–15 мс | DLine Media, KVMka, RootVDS, RUVDS (ДЦ IT Park) | **DLine Combo 1** 1/1/10 NVMe, 100 Мбит/с, безлимит, IPv4 — **210 ₽** (Combo 2: 2/4/25, 300 Мбит/с — 525 ₽); KVMka 01 — 555 ₽ | DLine малоизвестен; в Татарстане часто отключают мобильный интернет (влияет на клиентов, не на ДЦ) | **5** |
+| **Екатеринбург** | ~25–30 мс | RootVDS, NetAngels, EKACOD, RUVDS | **RootVDS** 1/1/15, **1 Гбит/с**, безлимит — 0,71 ₽/ч ≈ **510 ₽** (2/2/40 ≈ 1 160 ₽); NetAngels от ~250–620 ₽ | У RootVDS «мощности закончились» | **4** |
+| **Уфа** | ~20–25 мс | БашХостинг, Уфанет, RUVDS | **БашХостинг Старт** 1/1/15 NVMe, безлимит — **300 ₽** (Стандарт 2/2/30 — 550 ₽); Уфанет от 860 ₽ | Канал у БашХостинга не указан; регион под атаками дронов (НПЗ), частые отключения мобилки | **4** |
+| **Новосибирск** | ~50–55 мс | Timeweb, KVMka, RootVDS, 4VPS, AdminVPS, Jino, Adman | KVMka 01 — 555 ₽ | Дороже; +40 мс на пути до выхода | **3** |
+| Челябинск *(доп.)* | ~30 мс | ProfitServer (свой ДЦ) | S 2/1/15 SSD — **390 ₽** | Канал 100 Мбит/с, гарантировано только 50 | **3** |
+| Самара | ~15–20 мс | только RUVDS (с апреля 2026) | — | **Оферта RUVDS: приватный VPN до 10 ГБ/сутки** | **1** |
+| Омск | ~40–45 мс | только RUVDS | — | То же + далеко | **1** |
+| Мурманск | ~25–30 мс (через СПб) | только RUVDS | — | То же; маршрут всё равно через СПб; мало магистралей | **1** |
+| Краснодар *(доп.)* | ~20–25 мс | только RUVDS (на базе «ТелеМакс») | — | То же; южный регион, отключения мобилки | **1** |
+| Кемерово, Красноярск *(доп.)* | ~55–60 мс | 4VPS, Оптибит (не проверено) | — | Нет подтверждённых тарифов | **?** |
+| Владивосток *(доп.)* | ~110–130 мс | RUVDS | — | Далеко | **1** |
+
+Шкала: 5 — лучший выбор, 1 — не брать.
+
+**Самара, Омск, Мурманск и Краснодар держатся только на RUVDS.** Его оферта (10 ГБ/сутки на приватный VPN) не подходит для входа на 8–10 клиентов, так что без другого хостера в этих городах они не годятся.
+
+### Рекомендация по городам
+
+| Вход | Город | Хостер | ₽/мес |
+|---|---|---|---|
+| 1 | Казань | DLine Media Combo 1 (или KVMka 01) | 210 (555) |
+| 2 | Уфа | БашХостинг Старт | 300 |
+| 3 | Екатеринбург | RootVDS, когда появится, иначе NetAngels | ~510 |
+| **Итого** | | | **~1 000** |
+
+Три города, три хостера, три разные AS. Если нужен шанс на белый список — добавить 4-й вход в крупном облаке (Selectel или Yandex Cloud), там город не важен.
+
+Перед оплатой каждого:
+1. `whois` IP — чья AS: локального ДЦ или оператора (лучше) или хостинга из МСК/СПб.
+2. Спросить в поддержке скорость порта и есть ли лимит трафика.
+3. Тестовый период или почасовая оплата — проверить пинг и TLS на 443 с телефона и с домашнего интернета.
+
 ## Проверить перед оплатой
 
 - Тарифы с пометкой «агрегатор» (Selectel, FirstVDS, Beget, Timeweb Cloud 15) — сверить в панели: офсайт отдаёт цены через JS.
@@ -175,6 +222,7 @@ RUVDS уточнение (vpsindex.ru, 06.09.2026): Старт HIT 1/1/20 HDD �
 - [hostinghub.ru: дешёвые VPS (01.10.2026)](https://hostinghub.ru/top/vds/desheviy)
 - [UltraVDS](https://ultravds.com/), [SmartApe](https://smartape.ru/vps), [ISPserver](https://ispserver.ru/vps), [Macloud](https://macloud.ru/), [IHC](https://ihc.ru/vps.html), [FastFox](https://fastfox.pro/vds/), [JustHost](https://justhost.ru/), [HostKey](https://hostkey.ru/vps/), [KVMka](https://kvmka.ru/), [Hostiman](https://hostiman.ru/), [FirstByte](https://firstbyte.ru/vps-vds/), [Jino](https://jino.ru/vps/), [VPS.house](https://vps.house/), [NetAngels](https://www.netangels.ru/cloud/), [Cloud4box](https://cloud4box.com/)
 - [vpsindex.ru: VPS до 500 ₽ (06.09.2026)](https://vpsindex.ru/do-500-rubley), [hostinghub.ru: VPS в России](https://hostinghub.ru/node/15140), [DTF: дешёвые VPS](https://dtf.ru/top-raiting/4767952-luchshie-deshevye-vps-vds), [vc.ru: дешёвые VPS](https://vc.ru/top-raiting/3048059-deshevye-vps-obzor-luchshikh-provaiderov-dlya-ekonomii)
+- Регионы: [RootVDS Екатеринбург](https://rootvds.ru/services/vps-vds/ru/ekb/), [DLine Media Казань](https://dline-media.com/en/vps-vds-russia-kazan), [RUVDS IT Park Казань](https://ruvds.com/ru/data/itpark/), [БашХостинг](https://bashhosting.ru/), [Уфанет VPS](https://business.ufanet.ru/smb/virtualserver), [Ведомости: RUVDS в Самаре](https://www.vedomosti.ru/press_releases/2026/04/28/ruvds-zapustil-ploschadku-s-vichislitelnimi-moschnostyami-v-samare-erid-2VfnxweNc3C), [РБК: RUVDS в Краснодаре](https://companies.rbc.ru/news/IPZ1Lt6Ec8/ruvds-zapustil-ploschadku-s-vyichislitelnyimi-moschnostyami-v-krasnodare/), [hostinghub.ru: города](https://hostinghub.ru/top/city/ekaterinburg)
 - [Хабр: белые списки, топ ASN](https://habr.com/ru/articles/1027276/)
 - [Хабр: фильтрация ТСПУ у Timeweb Cloud](https://habr.com/ru/articles/1065578/)
 - [Теплица: хостеры под контролем (оферты Beget, RUVDS, NTX; Aeza)](https://te-st.org/2026/05/12/hostingrules/)
